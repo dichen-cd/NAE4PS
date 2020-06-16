@@ -49,7 +49,7 @@ This repository hosts our code for our paper [Norm-Aware Embedding for Efﬁcien
   title={Norm-Aware Embedding for Efficient Person Search},
   author={Chen, Di and Zhang, Shanshan and Yang, Jian and Schiele, Bernt},
   booktitle={CVPR},
-  organization={IEEE}
+  year={2020}
 }
 
 @inproceedings{chen2020hoim,
