@@ -22,7 +22,7 @@ This repository hosts our code for our paper [Norm-Aware Embedding for Efﬁcien
 
 ## Experiments
 
-1.  Download [CUHK-SYSU](https://github.com/ShuangLI59/person_search) and [PRW](http://www.liangzheng.com.cn/Project/project_prw.html) to `data/`
+1.  Download [CUHK-SYSU](https://github.com/ShuangLI59/person_search) and [PRW](https://github.com/liangzheng06/PRW-baseline) to `data/`
 
 2. Download the trained model
    ```bash
