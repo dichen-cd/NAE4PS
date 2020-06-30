@@ -34,23 +34,35 @@ class BackboneWithFasterRCNN(nn.Sequential):
 class RCNNConvHead(nn.Sequential):
     """docstring for RCNNConvHead"""
 
-    def __init__(self, backbone):
+    def __init__(self, backbone, return_res4=True, GAP=True):
         super(RCNNConvHead, self).__init__(
             OrderedDict(
                 [['layer4', backbone.layer4]]  # res5
             )
         )
-        self.out_channels = [1024, 2048]
+        self.return_res4 = return_res4
+        if self.return_res4:
+            self.out_channels = [1024, 2048]
+        else:
+            self.out_channels = [2048]
+        self.GAP = GAP
 
     def forward(self, x):
         feat = super(RCNNConvHead, self).forward(x)
-        return OrderedDict([
-            ['feat_res4', F.adaptive_max_pool2d(x, 1)], # Global average pooling
-            ['feat_res5', F.adaptive_max_pool2d(feat, 1)]]
-        )
+        if self.GAP:
+            x = F.adaptive_max_pool2d(x, 1)
+            feat = F.adaptive_max_pool2d(feat, 1)
+        if self.return_res4:
+            return OrderedDict([
+                ['feat_res4', x],  # Global average pooling
+                ['feat_res5', feat]]
+            )
+        else:
+            return OrderedDict([['feat_res5', feat]])
 
 
-def resnet_backbone(backbone_name, pretrained):
+def resnet_backbone(backbone_name, pretrained,
+                    return_res4=True, GAP=True):
     backbone = resnet.__dict__[backbone_name](
         pretrained=pretrained)
 
@@ -60,6 +72,6 @@ def resnet_backbone(backbone_name, pretrained):
     backbone.bn1.bias.requires_grad_(False)
 
     stem = BackboneWithFasterRCNN(backbone)
-    head = RCNNConvHead(backbone)
+    head = RCNNConvHead(backbone, return_res4, GAP)
 
     return stem, head
