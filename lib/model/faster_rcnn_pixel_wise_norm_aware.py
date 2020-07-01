@@ -444,8 +444,6 @@ def load_NAE_weights(args, model):
     state_dict['roi_heads.embedding_head.projectors.feat_res5.0.weight'] = \
         state_dict['roi_heads.embedding_head.projectors.feat_res5.0.weight'].view(
             128, 2048, 1, 1)
-    state_dict['roi_heads.reid_loss.cq_omega'] = model.state_dict()[
-        'roi_heads.reid_loss.cq_omega']
 
     model.load_state_dict(state_dict)
     print(hue.good('NAE pre-trained weights loaded.'))

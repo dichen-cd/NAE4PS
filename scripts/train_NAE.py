@@ -14,6 +14,7 @@ sys.path.append('./')
 from configs import args_faster_rcnn_norm_aware
 
 from lib.model.faster_rcnn_norm_aware import get_norm_aware_model
+from lib.model.faster_rcnn_pixel_wise_norm_aware import get_pixel_wise_norm_aware_model
 from lib.datasets import get_data_loader
 from lib.utils.distributed import init_distributed_mode, is_main_process
 from lib.utils.misc import Nestedspace, get_optimizer, get_lr_scheduler
