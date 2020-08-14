@@ -68,7 +68,7 @@ class PRW(PersonSearchDataset):
         return label_pids
 
     def load_probes(self):
-        query_info = osp.join(self.root, 'query_info_2057.txt')
+        query_info = osp.join(self.root, 'query_info.txt')
         with open(query_info, 'rb') as f:
             raw = f.readlines()
 
@@ -98,7 +98,7 @@ class PRW(PersonSearchDataset):
     @jit(forceobj=True)
     def search_performance_calc(gallery_set, probe_set,
                                 gallery_det, gallery_feat, probe_feat,
-                                det_thresh=0.5, gallery_size=-1, ignore_cam_id=False):
+                                det_thresh=0.5, gallery_size=-1, ignore_cam_id=True):
         """
         gallery_det (list of ndarray): n_det x [x1, x2, y1, y2, score] per image
         gallery_feat (list of ndarray): n_det x D features per image

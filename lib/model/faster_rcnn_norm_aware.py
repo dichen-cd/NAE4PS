@@ -21,6 +21,7 @@ class FasterRCNN_NormAware(GeneralizedRCNN):
     """
     See https://github.com/pytorch/vision/blob/master/torchvision/models/detection/faster_rcnn.py#L26
     """
+
     def __init__(self, backbone,
                  num_classes=None, num_pids=5532, num_cq_size=5000,
                  # transform parameters
@@ -99,7 +100,7 @@ class FasterRCNN_NormAware(GeneralizedRCNN):
             raise ValueError('feat_head should be specified manually.')
 
         if box_predictor is None:
-            box_predictor = FastRCNNPredictorBN(
+            box_predictor = CoordRegressor(
                 2048, num_classes,
                 rcnn_bbox_bn)
 
@@ -392,7 +393,6 @@ class NormAwareEmbeddingProj(nn.Module):
             return tmp
 
 
-
 class CoordRegressor(nn.Module):
     """
     bounding box regression layers, without classification layer.
@@ -504,5 +504,5 @@ def get_norm_aware_model(args, training=True, pretrained_backbone=True):
         model.train()
     else:
         model.eval()
-        
+
     return model
